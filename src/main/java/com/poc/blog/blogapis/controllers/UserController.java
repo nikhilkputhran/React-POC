@@ -2,6 +2,7 @@ package com.poc.blog.blogapis.controllers;
 
 import com.poc.blog.blogapis.dtos.UserDto;
 import com.poc.blog.blogapis.services.UserService;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -17,7 +18,7 @@ public class UserController {
     UserService userService;
 
     @PostMapping("/register")
-    public ResponseEntity<UserDto> createUser(@RequestBody UserDto userDto){
+    public ResponseEntity<UserDto> createUser(@RequestBody @Valid UserDto userDto){
         return new ResponseEntity<>(userService.createUser(userDto), HttpStatus.CREATED);
     }
 
