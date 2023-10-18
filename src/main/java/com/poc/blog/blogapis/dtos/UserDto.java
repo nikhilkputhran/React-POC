@@ -1,12 +1,17 @@
 package com.poc.blog.blogapis.dtos;
 
-import jakarta.validation.constraints.Email;
-import jakarta.validation.constraints.NotEmpty;
-import jakarta.validation.constraints.Size;
+import javax.persistence.*;
+import javax.validation.constraints.Email;
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.Size;
+
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+
+import java.util.HashSet;
+import java.util.Set;
 
 @Data
 @AllArgsConstructor
@@ -17,7 +22,7 @@ public class UserDto {
     @NotEmpty
     @Size(min=4,message = "Username must be minimum of 4 characters")
     private String name;
-    @NotEmpty
+    @NotEmpty(message = "email address can't be empty")
     @Email(message = "Email address is not valid")
     private String email;
     @NotEmpty
@@ -25,4 +30,6 @@ public class UserDto {
     private String password;
     @NotEmpty
     private String about;
+
+    private Set<RoleDto> roles=new HashSet<>();
 }

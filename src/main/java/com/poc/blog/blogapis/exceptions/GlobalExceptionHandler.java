@@ -14,10 +14,16 @@ import java.util.Map;
 
 @RestControllerAdvice
 public class GlobalExceptionHandler {
-    @ExceptionHandler(UserNotFoundException.class)
-    public ResponseEntity<GenericResponse> userNotFountExceptionHandler(UserNotFoundException ex){
+    @ExceptionHandler(ResourceNotFoundException.class)
+    public ResponseEntity<GenericResponse> userNotFountExceptionHandler(ResourceNotFoundException ex){
         GenericResponse genericResponse=new GenericResponse(ex.getMessage(),false);
         return new ResponseEntity<>(genericResponse, HttpStatus.NOT_FOUND);
+    }
+
+    @ExceptionHandler(GenericException.class)
+    public ResponseEntity<GenericResponse> genericExceptionHandler(GenericException ex){
+        GenericResponse genericResponse=new GenericResponse(ex.getMessage(),false);
+        return new ResponseEntity<>(genericResponse, HttpStatus.BAD_REQUEST);
     }
 
     @ExceptionHandler(MethodArgumentNotValidException.class)
