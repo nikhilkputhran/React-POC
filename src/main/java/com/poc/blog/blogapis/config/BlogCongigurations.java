@@ -34,6 +34,7 @@ public class BlogCongigurations {
         corsConfiguration.setMaxAge(3600L);
         source.registerCorsConfiguration("/**",corsConfiguration);
         FilterRegistrationBean filterRegistrationBean=new FilterRegistrationBean(new CorsFilter(source));
+        filterRegistrationBean.setOrder(-110);
         return filterRegistrationBean;
     }
 }

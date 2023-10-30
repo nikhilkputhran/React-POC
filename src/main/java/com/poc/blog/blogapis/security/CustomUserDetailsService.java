@@ -1,6 +1,7 @@
 package com.poc.blog.blogapis.security;
 
 import com.poc.blog.blogapis.exceptions.ResourceNotFoundException;
+import com.poc.blog.blogapis.models.User;
 import com.poc.blog.blogapis.repositories.UserRepo;
 import lombok.SneakyThrows;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,7 +19,7 @@ public class CustomUserDetailsService implements UserDetailsService {
     UserRepo userRepo;
     @Override
     @SneakyThrows
-    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+    public User loadUserByUsername(String username) throws UsernameNotFoundException {
         return  userRepo.findByEmail(username).orElseThrow(()->new ResourceNotFoundException(USER_NOT_FOUND));
 
     }

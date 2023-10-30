@@ -4,9 +4,11 @@ import com.poc.blog.blogapis.dtos.JwtAuthRequest;
 import com.poc.blog.blogapis.dtos.JwtAuthResponse;
 import com.poc.blog.blogapis.dtos.UserDto;
 import com.poc.blog.blogapis.exceptions.GenericException;
+import com.poc.blog.blogapis.models.User;
 import com.poc.blog.blogapis.security.JwtTokenHelper;
 import com.poc.blog.blogapis.services.UserService;
 import lombok.SneakyThrows;
+import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -39,6 +41,9 @@ public class AuthController {
     @Autowired
     private UserService userService;
 
+    @Autowired
+    ModelMapper modelMapper;
+
 
     @PostMapping("/login")
     public ResponseEntity<JwtAuthResponse> createToken(@RequestBody JwtAuthRequest request){
@@ -47,6 +52,7 @@ public class AuthController {
         UserDetails userDetails=userDetailsService.loadUserByUsername((request.getUserName()));
         JwtAuthResponse response = new JwtAuthResponse();
         response.setToken(jwtTokenHelper.generateToken(userDetails));
+        response.setUser(modelMapper.map((User)userDetails,UserDto.class));
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
 

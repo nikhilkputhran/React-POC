@@ -1,6 +1,7 @@
 package com.poc.blog.blogapis.security;
 
 import com.poc.blog.blogapis.exceptions.GenericException;
+import com.poc.blog.blogapis.models.User;
 import io.jsonwebtoken.ExpiredJwtException;
 import io.jsonwebtoken.MalformedJwtException;
 import lombok.SneakyThrows;
@@ -27,6 +28,8 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
 
     @Autowired
     UserDetailsService userDetailsService;
+    @Autowired
+    CustomUserDetailsService customUserDetailsService;
 
     @Override
     @SneakyThrows
@@ -50,7 +53,7 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
                 System.out.println("Jwt token does not begin with Bearer");
             }
             if(userName!=null && SecurityContextHolder.getContext().getAuthentication()==null){
-                UserDetails userDetails = userDetailsService.loadUserByUsername(userName);
+                User userDetails = customUserDetailsService.loadUserByUsername(userName);
                 if(jwtTokenHelper.validateToken(token,userDetails)){
                     UsernamePasswordAuthenticationToken usernamePasswordAuthenticationToken = new UsernamePasswordAuthenticationToken(userDetails,null,userDetails.getAuthorities());
                     usernamePasswordAuthenticationToken.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
