@@ -1,10 +1,7 @@
 package com.poc.blog.blogapis.models;
 
 
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import javax.persistence.*;
 import java.util.Date;
@@ -13,7 +10,8 @@ import java.util.Set;
 
 @Entity
 @Table(name="posts")
-@Data
+@Getter
+@Setter
 @AllArgsConstructor
 @NoArgsConstructor
 public class Post {
